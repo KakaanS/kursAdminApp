@@ -1,11 +1,10 @@
 import { View, Text } from "react-native";
 
+// components
+import ViewCoursesComponent from "../components/ViewCourseComponent";
+
 const Courses = () => {
-  return (
-    <View>
-      <Text>Courses</Text>
-    </View>
-  );
+  return <ViewCoursesComponent />;
 };
 
 export default Courses;
