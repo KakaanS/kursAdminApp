@@ -27,23 +27,27 @@ const addCourseComponent = ({ navigation }) => {
     navigation.navigate("Courses");
   };
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
+        style={styles.textInput}
         placeholder="Name of course"
         value={courseName}
         onChangeText={setCourseName}
       />
       <TextInput
+        style={styles.textInput}
         placeholder="Course information"
         value={courseInfo}
         onChangeText={setCourseInfo}
       />
       <TextInput
+        style={styles.textInput}
         placeholder="Youtubelink"
         value={youtubeLink}
         onChangeText={setYoutubeLink}
       />
       <TextInput
+        style={styles.textInputDisc}
         placeholder="Description"
         value={description}
         onChangeText={setDescription}
@@ -54,3 +58,27 @@ const addCourseComponent = ({ navigation }) => {
 };
 
 export default addCourseComponent;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingTop: 50,
+  },
+  textInput: {
+    height: 40,
+    width: "90%",
+    borderColor: "gray",
+    borderWidth: 1,
+    marginTop: 8,
+  },
+  textInputDisc: {
+    height: 100,
+    width: "90%",
+    borderColor: "gray",
+    borderWidth: 1,
+    marginTop: 8,
+  },
+});

@@ -4,7 +4,7 @@ import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 // Screens
 import HomeScreen from "./screens/Home";
