@@ -7,8 +7,8 @@ import { CourseContext } from "../context/CourseContext";
 // Components
 import AddCourseComponent from "../components/AddCourseComponent";
 
-const AddCourse = () => {
-  return <AddCourseComponent />;
+const AddCourse = ({ navigation }) => {
+  return <AddCourseComponent navigation={navigation} />;
 };
 
 export default AddCourse;

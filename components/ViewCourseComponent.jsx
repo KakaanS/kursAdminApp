@@ -5,20 +5,20 @@ import { View, Text, Pressable, FlatList } from "react-native";
 import { CourseContext } from "../context/CourseContext";
 
 const CourseComponent = ({ navigation }) => {
-  const { course } = useContext(CourseContext);
-  const handleCorsePress = (course) => {
-    navigation.navigate("Course", { course: course });
+  const { courses } = useContext(CourseContext);
+  const handleCoursePress = (course) => {
+    navigation.navigate("Course", { courses: course });
   };
-  const renderItem = ({ item }) => {
-    <Pressable onPress={() => handleCorsePress(item)}>
+  const renderItem = ({ item }) => (
+    <Pressable onPress={() => handleCoursePress(item)}>
       <Text>{item.name}</Text>
-    </Pressable>;
-  };
+    </Pressable>
+  );
   return (
     <View>
       <Text>Course!</Text>
       <FlatList
-        data={course}
+        data={courses}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />

@@ -12,3 +12,5 @@ const CourseComponent = ({ course }) => {
     </View>
   );
 };
+
+export default CourseComponent;
