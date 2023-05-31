@@ -1,5 +1,6 @@
 import react from "react";
 import { View, Text } from "react-native";
+import YoutubePlayer from "react-native-youtube-iframe";
 
 const CourseComponent = ({ course }) => {
   const { course } = route.params;
@@ -8,7 +9,7 @@ const CourseComponent = ({ course }) => {
     <View>
       <Text>{course.name}</Text>
       <Text>{course.info}</Text>
-      <Text>{course.youtube}</Text>
+      <YoutubePlayer height={300} play={true} videoId={course.youtube} />
     </View>
   );
 };

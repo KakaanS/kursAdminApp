@@ -1,12 +1,9 @@
 //Component
 import { CourseComponent } from "../components/CourseComponent";
 
-// Styles
-import styles from "../styles/main";
-
 const SpecificScreen = () => {
   return (
-    <View style={styles.container}>
+    <View>
       <CourseComponent />
     </View>
   );
