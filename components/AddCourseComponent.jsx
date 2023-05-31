@@ -10,6 +10,23 @@ const AddCourseComponent = ({ navigation }) => {
   const [youtubeLink, setYoutubeLink] = useState("");
 
   const { addCourse } = useContext(CourseContext);
+  /* 
+  categoryIds
+    title:
+    backgroundUrl:
+    logoUrl:
+    header: 
+    description, 
+    content: 
+
+    and in step 2-6: 
+    Here its called moments
+    videoId (link)
+    videoDescriptions:
+    videoGoals:
+     */
+
+  // Behöver göra ändringar, eventuellt slopa stora delar av denna komponenten och göra en ny...
 
   const handleAddCourse = () => {
     const newCourse = {
@@ -18,6 +35,7 @@ const AddCourseComponent = ({ navigation }) => {
       info: courseInfo,
       description: description,
       youtube: youtubeLink,
+      videoOrder: step - 1,
     };
     addCourse(newCourse);
 

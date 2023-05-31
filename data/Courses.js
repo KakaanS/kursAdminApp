@@ -21,7 +21,7 @@ const defaultCourses = [
     ],
     moments: [
       {
-        videoOrder: 0,
+        videoOrder: 1,
         videoId: "ZbzE-257UKM",
         videoDescriptions: "Docking a Boat: 6 Steps for Beginners",
         videoGoals: [
@@ -31,7 +31,7 @@ const defaultCourses = [
         ],
       },
       {
-        videoOrder: 1,
+        videoOrder: 2,
         videoId: "VlCq-6CwYAo",
         videoDescriptions:
           "This video describes how to dock and what to think about when docking a boat.",
@@ -42,7 +42,7 @@ const defaultCourses = [
         ],
       },
       {
-        videoOrder: 2,
+        videoOrder: 3,
         videoId: "IqCPbudillU",
         videoDescriptions: "This video shows how to sail into the harbour",
         videoGoals: [
@@ -51,7 +51,7 @@ const defaultCourses = [
         ],
       },
       {
-        videoOrder: 3,
+        videoOrder: 4,
         videoId: "8m_ivNgwExI",
         videoDescriptions:
           "This video shows the bascis of how to navigate the seas",
@@ -61,7 +61,7 @@ const defaultCourses = [
         ],
       },
       {
-        videoOrder: 4,
+        videoOrder: 5,
         videoId: "yin0GuqddYE",
         videoDescriptions:
           "This video will show how and what to think about when navigating at night",
@@ -71,7 +71,7 @@ const defaultCourses = [
         ],
       },
       {
-        videoOrder: 5,
+        videoOrder: 6,
         videoId: "X4W0D5FkN64",
         videoDescriptions: "How to take out coordinates",
         videoGoals: ["Learn how to take out coordinates"],
