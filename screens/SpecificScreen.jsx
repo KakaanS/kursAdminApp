@@ -2,10 +2,6 @@
 import { CourseComponent } from "../components/CourseComponent";
 
 const SpecificScreen = () => {
-  return (
-    <View>
-      <CourseComponent />
-    </View>
-  );
+  return <CourseComponent />;
 };
 export default SpecificScreen;

@@ -1,17 +1,17 @@
-import react from "react";
+import React from "react";
 import { View, Text } from "react-native";
 import YoutubePlayer from "react-native-youtube-iframe";
 
-const CourseComponent = ({ course }) => {
+const CourseDetails = ({ route }) => {
   const { course } = route.params;
 
   return (
     <View>
-      <Text>{course.name}</Text>
-      <Text>{course.info}</Text>
+      <Text>{course.title}</Text>
+      <Text>{course.description}</Text>
       <YoutubePlayer height={300} play={true} videoId={course.youtube} />
     </View>
   );
 };
 
-export default CourseComponent;
+export default CourseDetails;

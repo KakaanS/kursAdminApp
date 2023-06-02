@@ -1,152 +1,226 @@
-import React, { useContext, useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import React, { useState, useContext } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 import { CourseContext } from "../context/CourseContext";
+import CATEGORIES from "../data/categories";
 
-const AddCourseComponent = ({ navigation }) => {
-  const [step, setStep] = useState(1);
-  const [courseName, setCourseName] = useState("");
-  const [courseInfo, setCourseInfo] = useState("");
-  const [description, setDescription] = useState("");
-  const [youtubeLink, setYoutubeLink] = useState("");
+const AddNewCourseComponent = ({ navigation }) => {
+  const { addCourse, courses } = useContext(CourseContext);
 
-  const { addCourse } = useContext(CourseContext);
-  /* 
-  categoryIds
-    title:
-    backgroundUrl:
-    logoUrl:
-    header: 
-    description, 
-    content: 
+  const [courseData, setCourseData] = useState({
+    id: generateCourseId(),
+    categoryIds: [],
+    title: "",
+    backgroundUrl: "",
+    logoUrl: "",
+    header: "",
+    description: "",
+    content: "",
+    moments: Array(6)
+      .fill(null)
+      .map((_, index) => ({
+        videoOrder: index + 1,
+        videoId: "",
+        videoDescriptions: "",
+        videoGoals: "",
+      })),
+  });
 
-    and in step 2-6: 
-    Here its called moments
-    videoId (link)
-    videoDescriptions:
-    videoGoals:
-     */
-
-  // Behöver göra ändringar, eventuellt slopa stora delar av denna komponenten och göra en ny...
+  const handleInputChange = (field, value) => {
+    setCourseData((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
 
   const handleAddCourse = () => {
-    const newCourse = {
-      id: Math.floor(Math.random() * 100000000),
-      name: courseName,
-      info: courseInfo,
-      description: description,
-      youtube: youtubeLink,
-      videoOrder: step - 1,
-    };
-    addCourse(newCourse);
-
-    if (step < 6) {
-      setStep(step + 1);
-    } else {
-      setCourseName("");
-      setCourseInfo("");
-      setYoutubeLink("");
-      setDescription("");
-      navigation.navigate("Courses");
-    }
+    addCourse(courseData);
+    setCourseData({
+      id: generateCourseId(),
+      categoryIds: [],
+      title: "",
+      backgroundUrl: "",
+      logoUrl: "",
+      header: "",
+      description: "",
+      content: "",
+      moments: Array(6)
+        .fill(null)
+        .map((_, index) => ({
+          videoOrder: index + 1,
+          videoId: "",
+          videoDescriptions: "",
+          videoGoals: "",
+        })),
+    });
+    navigation.navigate("Courses");
   };
 
-  const renderStepContent = () => {
-    switch (step) {
-      case 1:
-        return (
-          <View style={styles.container}>
-            <Text style={styles.textStyle}>Step 1 of 6</Text>
-            {/* Step 1 content */}
-            <TextInput
-              style={styles.textInput}
-              placeholder="Name of course"
-              value={courseName}
-              onChangeText={setCourseName}
-            />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Course information"
-              value={courseInfo}
-              onChangeText={setCourseInfo}
-            />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Youtube link"
-              value={youtubeLink}
-              onChangeText={setYoutubeLink}
-            />
-            <Button title="Next step" onPress={handleAddCourse} />
-          </View>
-        );
-      case 2:
-        return (
-          <View style={styles.container}>
-            <Text style={styles.textStyle}>Step 2 of 6</Text>
-            {/* Step 2 content */}
-            {/* ... */}
-          </View>
-        );
-      case 3:
-        return (
-          <View style={styles.container}>
-            <Text style={styles.textStyle}>Step 3 of 6</Text>
-            {/* Step 3 content */}
-            {/* ... */}
-          </View>
-        );
-      case 4:
-        return (
-          <View style={styles.container}>
-            <Text style={styles.textStyle}>Step 4 of 6</Text>
-            {/* Step 4 content */}
-            {/* ... */}
-          </View>
-        );
-      case 5:
-        return (
-          <View style={styles.container}>
-            <Text style={styles.textStyle}>Step 5 of 6</Text>
-            {/* Step 5 content */}
-            {/* ... */}
-          </View>
-        );
-      case 6:
-        return (
-          <View style={styles.container}>
-            <Text style={styles.textStyle}>Step 6 of 6</Text>
-            {/* Step 6 content */}
-            {/* ... */}
-          </View>
-        );
-      default:
-        return null;
-    }
+  const handleAddCategory = (categoryId) => {
+    setCourseData((prevData) => ({
+      ...prevData,
+      categoryIds: [...prevData.categoryIds, categoryId],
+    }));
   };
 
-  return <>{renderStepContent()}</>;
+  const isCategoryAdded = (categoryId) => {
+    return courseData.categoryIds.includes(categoryId);
+  };
+
+  const renderCategories = () => {
+    return CATEGORIES.map((category) => (
+      <Button
+        key={category.id}
+        title={category.title}
+        onPress={() => handleAddCategory(category.id)}
+        color={isCategoryAdded(category.id) ? "green" : undefined}
+      />
+    ));
+  };
+
+  const handleMomentChange = (index, field, value) => {
+    setCourseData((prevData) => {
+      const moments = [...prevData.moments];
+      moments[index] = { ...moments[index], [field]: value };
+      return { ...prevData, moments };
+    });
+  };
+
+  function generateCourseId() {
+    let id;
+    do {
+      id = Math.floor(Math.random() * 10000);
+    } while (courses.find((course) => course.id === id));
+    return id;
+  }
+
+  return (
+    <ScrollView style={styles.container}>
+      <Text style={styles.heading}>Add New Course</Text>
+
+      <Text style={styles.subheading}>Categories:</Text>
+      <View style={styles.categoriesContainer}>{renderCategories()}</View>
+
+      <TextInput
+        style={styles.textInput}
+        placeholder="Title"
+        value={courseData.title}
+        onChangeText={(text) => handleInputChange("title", text)}
+      />
+
+      <TextInput
+        style={styles.textInput}
+        placeholder="Background URL"
+        value={courseData.backgroundUrl}
+        onChangeText={(text) => handleInputChange("backgroundUrl", text)}
+      />
+
+      <TextInput
+        style={styles.textInput}
+        placeholder="Logo URL"
+        value={courseData.logoUrl}
+        onChangeText={(text) => handleInputChange("logoUrl", text)}
+      />
+
+      <TextInput
+        style={styles.textInput}
+        placeholder="Header"
+        value={courseData.header}
+        onChangeText={(text) => handleInputChange("header", text)}
+      />
+
+      <Text style={styles.subheading}>Description:</Text>
+      <TextInput
+        style={styles.textInput}
+        placeholder="Description"
+        value={courseData.description}
+        onChangeText={(text) => handleInputChange("description", text)}
+        multiline
+      />
+
+      <Text style={styles.subheading}>Content:</Text>
+      <TextInput
+        style={styles.textInput}
+        placeholder="Content"
+        value={courseData.content}
+        onChangeText={(text) => handleInputChange("content", text)}
+        multiline
+      />
+
+      <Text style={styles.subheading}>Moments:</Text>
+      {courseData.moments.map((moment, index) => (
+        <View key={index}>
+          <Text>Step {moment.videoOrder}</Text>
+          <TextInput
+            style={styles.textInput}
+            placeholder="Video ID"
+            value={moment.videoId}
+            onChangeText={(text) => handleMomentChange(index, "videoId", text)}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Video Descriptions"
+            value={moment.videoDescriptions}
+            onChangeText={(text) =>
+              handleMomentChange(index, "videoDescriptions", text)
+            }
+            multiline
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Video Goals"
+            value={moment.videoGoals}
+            onChangeText={(text) =>
+              handleMomentChange(index, "videoGoals", text)
+            }
+            multiline
+          />
+        </View>
+      ))}
+
+      <Button
+        style={styles.button}
+        title="Add Course"
+        onPress={handleAddCourse}
+      />
+    </ScrollView>
+  );
 };
-
-export default AddCourseComponent;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    paddingTop: 50,
-    height: "100%",
+    padding: 16,
+    marginBottom: 30,
   },
-  textStyle: {
-    alignSelf: "center",
-    fontSize: 20,
+  heading: {
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 16,
+  },
+  subheading: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 16,
+    marginBottom: 8,
   },
   textInput: {
-    height: 40,
-    width: "90%",
-    borderColor: "gray",
     borderWidth: 1,
-    marginTop: 8,
+    borderColor: "gray",
+    borderRadius: 4,
+    padding: 8,
+    marginBottom: 16,
+  },
+  categoriesContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginBottom: 16,
   },
 });
+
+export default AddNewCourseComponent;

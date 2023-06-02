@@ -3,10 +3,10 @@ import { View, Text, StyleSheet } from "react-native";
 // components
 import ViewCoursesComponent from "../components/ViewCourseComponent";
 
-const Courses = () => {
+const Courses = ({ navigation }) => {
   return (
     <View>
-      <ViewCoursesComponent />
+      <ViewCoursesComponent navigation={navigation} />
     </View>
   );
 };
