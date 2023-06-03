@@ -3,7 +3,9 @@ import React from "react";
 import MomentDetail from "../components/MomentComp";
 
 const MomentScreen = ({ navigation, route }) => {
-  return <MomentDetail navigation={navigation} route={route} />;
+  const { moment } = route.params;
+
+  return <MomentDetail navigation={navigation} moment={moment} />;
 };
 
 export default MomentScreen;
