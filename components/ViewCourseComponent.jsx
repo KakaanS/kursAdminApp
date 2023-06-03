@@ -14,8 +14,10 @@ import { CourseContext } from "../context/CourseContext";
 const CourseComponent = ({ navigation }) => {
   const { courses } = useContext(CourseContext);
   const handleCoursePress = (course) => {
-    navigation.navigate("SpecificScreen", { courses: course.id });
+    console.log(course);
+    navigation.navigate("SpecificScreen", { course: course.id });
   };
+
   const renderItem = ({ item }) => (
     <Pressable onPress={() => handleCoursePress(item)}>
       <View style={styles.courseContainer}>
@@ -44,9 +46,12 @@ export default CourseComponent;
 
 const styles = StyleSheet.create({
   courseContainer: {
-    marginBottom: 10,
     padding: 10,
     backgroundColor: "#FFFFFF",
+    shadowOffset: { width: 6, height: 6 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    margin: 10,
   },
   backgroundImage: {
     width: "100%",

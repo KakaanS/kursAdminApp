@@ -1,7 +1,8 @@
+import React from "react";
 //Component
-import { CourseComponent } from "../components/CourseComponent";
+import CourseDetails from "../components/CourseComponent";
 
-const SpecificScreen = () => {
-  return <CourseComponent />;
+const SpecificScreen = ({ navigation }) => {
+  return <CourseDetails navigation={navigation} />;
 };
 export default SpecificScreen;

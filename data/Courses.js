@@ -1,8 +1,8 @@
 const defaultCourses = [
   {
-    id: "db72c7ba-374d-44dd-946e-fa3c75bd6409",
+    id: "1",
     categoryIds: ["c1", "c2"],
-    title: "HTML",
+    title: "Navigate MF",
     backgroundUrl: "https://i.imgur.com/qf7g3jL.jpg",
     logoUrl:
       "https://t4.ftcdn.net/jpg/01/06/12/71/360_F_106127162_rrXIF77QqJIFsz2vhuXYnnpxHZ1OcfyJ.jpg",
