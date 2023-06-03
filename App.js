@@ -11,6 +11,7 @@ import HomeScreen from "./screens/Home";
 import Courses from "./screens/Courses";
 import AddCourse from "./screens/AddCourse";
 import SpecificScreen from "./screens/SpecificScreen";
+import MomentScreen from "./screens/MomentScreen";
 
 // Context
 import { CourseProvider } from "./context/CourseContext";
@@ -29,6 +30,7 @@ const CoursesStack = () => (
   <Stack.Navigator>
     <Stack.Screen name="Courses" component={Courses} />
     <Stack.Screen name="SpecificScreen" component={SpecificScreen} />
+    <Stack.Screen name="MomentScreen" component={MomentScreen} />
   </Stack.Navigator>
 );
 

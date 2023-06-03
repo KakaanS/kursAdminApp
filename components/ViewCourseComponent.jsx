@@ -14,8 +14,7 @@ import { CourseContext } from "../context/CourseContext";
 const CourseComponent = ({ navigation }) => {
   const { courses } = useContext(CourseContext);
   const handleCoursePress = (course) => {
-    console.log(course);
-    navigation.navigate("SpecificScreen", { course: course.id });
+    navigation.navigate("SpecificScreen", { course: course });
   };
 
   const renderItem = ({ item }) => (
