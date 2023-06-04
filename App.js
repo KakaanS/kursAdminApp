@@ -15,6 +15,7 @@ import MomentScreen from "./screens/MomentScreen";
 
 // Context
 import { CourseProvider } from "./context/CourseContext";
+import WatchedVideosProvider from "./context/WatchedVideosContext";
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -36,14 +37,16 @@ const CoursesStack = () => (
 
 export default function App() {
   return (
-    <CourseProvider>
-      <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Home">
-          <Drawer.Screen name="Home" component={HomeStack} />
-          <Drawer.Screen name="Courses" component={CoursesStack} />
-          <Drawer.Screen name="Add Course" component={AddCourse} />
-        </Drawer.Navigator>
-      </NavigationContainer>
-    </CourseProvider>
+    <WatchedVideosProvider>
+      <CourseProvider>
+        <NavigationContainer>
+          <Drawer.Navigator initialRouteName="Home">
+            <Drawer.Screen name="Home" component={HomeStack} />
+            <Drawer.Screen name="Courses" component={CoursesStack} />
+            <Drawer.Screen name="Add Course" component={AddCourse} />
+          </Drawer.Navigator>
+        </NavigationContainer>
+      </CourseProvider>
+    </WatchedVideosProvider>
   );
 }

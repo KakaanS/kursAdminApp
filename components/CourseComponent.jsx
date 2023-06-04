@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import YoutubePlayer from "react-native-youtube-iframe";
+import { WatchedVideosContext } from "../context/WatchedVideosContext";
 
 const CourseDetails = ({ route }) => {
   const { course } = route.params;
   const navigation = useNavigation();
+  const { watchedVideos } = useContext(WatchedVideosContext);
 
   const handleMomentPress = (moment) => {
-    navigation.navigate("MomentScreen", { moment });
+    if (watchedVideos.includes(moment.videoId)) {
+      navigation.navigate("MomentScreen", { moment });
+    } else {
+      // Handle the case when the video hasn't been watched
+      // You can show a message or perform any desired action
+      console.log("Video not watched");
+    }
   };
 
   return (
@@ -19,6 +26,7 @@ const CourseDetails = ({ route }) => {
         <Pressable
           key={moment.videoOrder}
           onPress={() => handleMomentPress(moment)}
+          disabled={!watchedVideos.includes(moment.videoId)}
         >
           <View style={styles.momentContainer}>
             <Text style={styles.momentText}>{moment.videoDescriptions}</Text>
