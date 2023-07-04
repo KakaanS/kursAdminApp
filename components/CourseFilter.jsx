@@ -1,33 +1,34 @@
 import react, { useContext } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 
-// Categories
+// support imports
 import { CATEGORIES } from "../data/categories";
 
 const CourseFilter = ({ selectedCategory, onSelectCategory }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Filter by Category:</Text>
-      {CATEGORIES.map((category) => (
-        <Pressable
-          key={category.id}
-          style={[
-            styles.categoryButton,
-            category.id === selectedCategory && styles.selectedCategoryButton,
-          ]}
-          onPress={() => onSelectCategory(category.id)}
-        >
-          <Text
+      {CATEGORIES &&
+        CATEGORIES.map((category) => (
+          <Pressable
+            key={category.id}
             style={[
-              styles.categoryButtonText,
-              category.id === selectedCategory &&
-                styles.selectedCategoryButtonText,
+              styles.categoryButton,
+              category.id === selectedCategory && styles.selectedCategoryButton,
             ]}
+            onPress={() => onSelectCategory(category.id)}
           >
-            {category.title}
-          </Text>
-        </Pressable>
-      ))}
+            <Text
+              style={[
+                styles.categoryButtonText,
+                category.id === selectedCategory &&
+                  styles.selectedCategoryButtonText,
+              ]}
+            >
+              {category.title}
+            </Text>
+          </Pressable>
+        ))}
     </View>
   );
 };

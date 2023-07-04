@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -8,14 +8,21 @@ import {
   StyleSheet,
 } from "react-native";
 
-// context
+// Support Imports
 import { CourseContext } from "../context/CourseContext";
 import CATEGORIES from "../data/categories";
+import CourseFilter from "./CourseFilter";
 
 const CourseComponent = ({ navigation }) => {
   const { courses } = useContext(CourseContext);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
   const handleCoursePress = (course) => {
     navigation.navigate("SpecificScreen", { course: course });
+  };
+
+  const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId);
   };
 
   const renderItem = ({ item }) => (
@@ -30,10 +37,22 @@ const CourseComponent = ({ navigation }) => {
       </View>
     </Pressable>
   );
+
+  const filteredCourses =
+    selectedCategory && selectedCategory !== "all"
+      ? courses.filter((course) =>
+          course.categoryIds.includes(selectedCategory)
+        )
+      : courses;
+
   return (
     <View>
+      <CourseFilter
+        selectedCategory={selectedCategory}
+        onSelectCategory={handleCategorySelect}
+      />
       <FlatList
-        data={courses}
+        data={filteredCourses}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />
