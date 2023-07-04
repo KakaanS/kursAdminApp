@@ -31,7 +31,6 @@ const CourseComponent = ({ navigation }) => {
   );
   return (
     <View>
-      <Text>Course!</Text>
       <FlatList
         data={courses}
         renderItem={renderItem}

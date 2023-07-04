@@ -21,15 +21,15 @@ const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 const HomeScreenOptions = {
-  title: "Home",
+  title: "It all starts here!",
 };
 
 const CouseScreenOptions = {
-  title: "Courses",
+  title: "Choose Course:",
 };
 
 const AddCouseScreenOptions = {
-  title: "Add Course",
+  title: "Add new Course:",
 };
 
 const HomeScreenComponent = ({ navigation }) => (
@@ -70,8 +70,8 @@ export default function App() {
     <WatchedVideosProvider>
       <CourseProvider>
         <NavigationContainer>
-          <Drawer.Navigator initialRouteName="Start">
-            <Drawer.Screen name="Home" component={HomeScreenComponent} />
+          <Drawer.Navigator initialRouteName="Home">
+            <Drawer.Screen name="Start" component={HomeScreenComponent} />
             <Drawer.Screen name="Courses" component={CousesScreenComponent} />
             <Drawer.Screen
               name="Add Course"

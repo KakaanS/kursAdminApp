@@ -6,6 +6,7 @@ const WatchedVideosProvider = ({ children }) => {
   const [watchedVideos, setWatchedVideos] = useState([]);
 
   const addWatchedVideo = (videoId) => {
+    console.log("adding watched video:", videoId);
     setWatchedVideos((prevWatchedVideos) => [...prevWatchedVideos, videoId]);
   };
 

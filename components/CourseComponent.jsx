@@ -9,12 +9,13 @@ const CourseDetails = ({ route }) => {
   const { watchedVideos } = useContext(WatchedVideosContext);
 
   const handleMomentPress = (moment) => {
-    if (watchedVideos.includes(moment.videoId)) {
+    const { videoOrder, videoId } = moment;
+
+    if (videoOrder === 1 || watchedVideos.includes(moment.videoId)) {
       navigation.navigate("MomentScreen", { moment });
     } else {
-      // Handle the case when the video hasn't been watched
-      // You can show a message or perform any desired action
-      console.log("Video not watched");
+      console.log("Video not watched yet");
+      // create alert
     }
   };
 
@@ -26,7 +27,9 @@ const CourseDetails = ({ route }) => {
         <Pressable
           key={moment.videoOrder}
           onPress={() => handleMomentPress(moment)}
-          disabled={!watchedVideos.includes(moment.videoId)}
+          disabled={
+            moment.videoOrder !== 1 && !watchedVideos.includes(moment.videoId)
+          }
         >
           <View style={styles.momentContainer}>
             <Text style={styles.momentText}>{moment.videoDescriptions}</Text>
