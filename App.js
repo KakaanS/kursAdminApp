@@ -20,18 +20,48 @@ import WatchedVideosProvider from "./context/WatchedVideosContext";
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
-const HomeStack = () => (
+const HomeScreenOptions = {
+  title: "Home",
+};
+
+const CouseScreenOptions = {
+  title: "Courses",
+};
+
+const AddCouseScreenOptions = {
+  title: "Add Course",
+};
+
+const HomeScreenComponent = ({ navigation }) => (
   <Stack.Navigator>
-    <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Screen
+      name="Home"
+      component={HomeScreen}
+      options={HomeScreenOptions}
+    />
     <Stack.Screen name="SpecificScreen" component={SpecificScreen} />
   </Stack.Navigator>
 );
-// added the above and below to access screens, but I get double headers. Check in later.
-const CoursesStack = () => (
+
+const CousesScreenComponent = ({ navigation }) => (
   <Stack.Navigator>
-    <Stack.Screen name="Courses" component={Courses} />
+    <Stack.Screen
+      name="Couses"
+      component={Courses}
+      options={CouseScreenOptions}
+    />
     <Stack.Screen name="SpecificScreen" component={SpecificScreen} />
     <Stack.Screen name="MomentScreen" component={MomentScreen} />
+  </Stack.Navigator>
+);
+
+const AddCourseScreenComponent = ({ navigation }) => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="Add Course"
+      component={AddCourse}
+      options={AddCouseScreenOptions}
+    />
   </Stack.Navigator>
 );
 
@@ -40,10 +70,13 @@ export default function App() {
     <WatchedVideosProvider>
       <CourseProvider>
         <NavigationContainer>
-          <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen name="Home" component={HomeStack} />
-            <Drawer.Screen name="Courses" component={CoursesStack} />
-            <Drawer.Screen name="Add Course" component={AddCourse} />
+          <Drawer.Navigator initialRouteName="Start">
+            <Drawer.Screen name="Home" component={HomeScreenComponent} />
+            <Drawer.Screen name="Courses" component={CousesScreenComponent} />
+            <Drawer.Screen
+              name="Add Course"
+              component={AddCourseScreenComponent}
+            />
           </Drawer.Navigator>
         </NavigationContainer>
       </CourseProvider>
