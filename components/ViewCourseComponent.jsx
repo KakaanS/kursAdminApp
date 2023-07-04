@@ -10,6 +10,7 @@ import {
 
 // context
 import { CourseContext } from "../context/CourseContext";
+import CATEGORIES from "../data/categories";
 
 const CourseComponent = ({ navigation }) => {
   const { courses } = useContext(CourseContext);

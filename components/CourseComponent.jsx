@@ -1,7 +1,11 @@
 import React, { useContext } from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+
+//context
 import { WatchedVideosContext } from "../context/WatchedVideosContext";
+//Components
+import CourseFilter from "./CourseFilter";
 
 const CourseDetails = ({ route }) => {
   const { course } = route.params;
@@ -30,6 +34,11 @@ const CourseDetails = ({ route }) => {
           disabled={
             moment.videoOrder !== 1 && !watchedVideos.includes(moment.videoId)
           }
+          style={[
+            styles.momentContainer,
+            moment.videoOrder !== 1 &&
+              !watchedVideos.includes(moment.videoId) && { opacity: 0.5 },
+          ]}
         >
           <View style={styles.momentContainer}>
             <Text style={styles.momentText}>{moment.videoDescriptions}</Text>
