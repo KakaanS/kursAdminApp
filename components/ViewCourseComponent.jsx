@@ -7,6 +7,7 @@ import {
   Image,
   StyleSheet,
 } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 // Support Imports
 import { CourseContext } from "../context/CourseContext";
@@ -15,14 +16,9 @@ import CourseFilter from "./CourseFilter";
 
 const CourseComponent = ({ navigation }) => {
   const { courses } = useContext(CourseContext);
-  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleCoursePress = (course) => {
     navigation.navigate("SpecificScreen", { course: course });
-  };
-
-  const handleCategorySelect = (categoryId) => {
-    setSelectedCategory(categoryId);
   };
 
   const renderItem = ({ item }) => (
@@ -38,21 +34,11 @@ const CourseComponent = ({ navigation }) => {
     </Pressable>
   );
 
-  const filteredCourses =
-    selectedCategory && selectedCategory !== "all"
-      ? courses.filter((course) =>
-          course.categoryIds.includes(selectedCategory)
-        )
-      : courses;
-
   return (
     <View>
-      <CourseFilter
-        selectedCategory={selectedCategory}
-        onSelectCategory={handleCategorySelect}
-      />
+      <CourseFilter courses={courses} navigation={navigation} />
       <FlatList
-        data={filteredCourses}
+        data={courses}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />
