@@ -5,7 +5,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CATEGORIES from "../data/categories";
 
 const CourseFilter = ({ courses, navigation }) => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const toggleModal = () => {
@@ -17,14 +17,30 @@ const CourseFilter = ({ courses, navigation }) => {
   };
 
   const handleCategorySelect = (categoryId) => {
-    setSelectedCategory(categoryId);
+    const updatedCategory = [...selectedCategory];
+
+    if (updatedCategory.includes(categoryId)) {
+      updatedCategory.splice(updatedCategory.indexOf(categoryId), 1);
+    } else {
+      updatedCategory.push(categoryId);
+    }
+    setSelectedCategory(updatedCategory);
+  };
+
+  const isCategorySelected = (categoryId) => {
+    return selectedCategory.includes(categoryId);
+  };
+
+  const applyFilters = () => {
     toggleModal();
   };
 
   const filteredCourses =
-    selectedCategory && selectedCategory !== "all"
+    selectedCategory.length > 0
       ? courses.filter((course) =>
-          course.categoryIds.includes(selectedCategory)
+          course.categoryIds.some((categoryId) =>
+            selectedCategory.includes(categoryId)
+          )
         )
       : courses;
 
@@ -33,22 +49,33 @@ const CourseFilter = ({ courses, navigation }) => {
       headerRight: () => (
         <HeaderButtons>
           <Item
-            title="filter"
+            title="Filter"
             iconName="filter-outline"
-            onPress={toggleModal}
+            onPress={applyFilters}
           />
         </HeaderButtons>
       ),
     });
-  }, [navigation, toggleModal]);
+  }, [navigation, applyFilters]);
 
   return (
     <View style={styles.container}>
       <Pressable onPress={toggleModal}>
-        <Text style={styles.heading}>Showing category:</Text>
-        <Text style={styles.selectedCategory}>
-          {selectedCategory ? selectedCategory : "All"}
-        </Text>
+        <Text style={styles.heading}>Showing categories:</Text>
+        <View style={styles.selectedCategory}>
+          {selectedCategory.length > 0 ? (
+            selectedCategory.map((categoryId) => (
+              <Text key={categoryId} style={styles.selectedCategory}>
+                {
+                  CATEGORIES.find((category) => category.id === categoryId)
+                    ?.title
+                }
+              </Text>
+            ))
+          ) : (
+            <Text style={styles.selectedCategory}>All</Text>
+          )}
+        </View>
       </Pressable>
 
       <Modal
@@ -59,13 +86,7 @@ const CourseFilter = ({ courses, navigation }) => {
       >
         <View style={styles.modalContainer}>
           <HeaderButtons>
-            <Item
-              title="filter"
-              iconName="filter-outline"
-              onPress={() => {
-                handleCategorySelect(null);
-              }}
-            />
+            <Item title="Apply" onPress={applyFilters} />
           </HeaderButtons>
 
           {CATEGORIES.map((category) => (
@@ -73,7 +94,7 @@ const CourseFilter = ({ courses, navigation }) => {
               key={category.id}
               style={[
                 styles.categoryButton,
-                category.id === selectedCategory &&
+                isCategorySelected(category.id) &&
                   styles.selectedCategoryButton,
               ]}
               onPress={() => handleCategorySelect(category.id)}
@@ -81,7 +102,7 @@ const CourseFilter = ({ courses, navigation }) => {
               <Text
                 style={[
                   styles.categoryButtonText,
-                  category.id === selectedCategory &&
+                  isCategorySelected(category.id) &&
                     styles.selectedCategoryButtonText,
                 ]}
               >
