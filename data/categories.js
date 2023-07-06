@@ -1,9 +1,5 @@
 const CATEGORIES = [
   {
-    id: "all",
-    title: "all categories",
-  },
-  {
     id: "c1",
     title: "docking",
   },

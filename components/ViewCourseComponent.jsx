@@ -7,15 +7,14 @@ import {
   Image,
   StyleSheet,
 } from "react-native";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 // Support Imports
 import { CourseContext } from "../context/CourseContext";
-import CATEGORIES from "../data/categories";
 import CourseFilter from "./CourseFilter";
 
 const CourseComponent = ({ navigation }) => {
   const { courses } = useContext(CourseContext);
+  const [filteredCourses, setFilteredCourses] = useState(courses);
 
   const handleCoursePress = (course) => {
     navigation.navigate("SpecificScreen", { course: course });
@@ -36,9 +35,14 @@ const CourseComponent = ({ navigation }) => {
 
   return (
     <View>
-      <CourseFilter courses={courses} navigation={navigation} />
+      <CourseFilter
+        courses={courses}
+        navigation={navigation}
+        filteredCourses={filteredCourses}
+        setFilteredCourses={setFilteredCourses}
+      />
       <FlatList
-        data={courses}
+        data={filteredCourses}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
       />

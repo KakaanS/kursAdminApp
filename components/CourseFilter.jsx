@@ -4,17 +4,17 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import CATEGORIES from "../data/categories";
 
-const CourseFilter = ({ courses, navigation }) => {
+const CourseFilter = ({ courses, navigation, setFilteredCourses }) => {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
   };
-
+  /* 
   const handleCoursePress = (course) => {
     navigation.navigate("SpecificScreen", { course: course });
-  };
+  }; */
 
   const handleCategorySelect = (categoryId) => {
     const updatedCategory = [...selectedCategory];
@@ -33,15 +33,16 @@ const CourseFilter = ({ courses, navigation }) => {
 
   const applyFilters = () => {
     toggleModal();
+    setFilteredCourses(filteredCourses);
   };
 
   const filteredCourses =
-    selectedCategory.length > 0
-      ? courses.filter((course) =>
-          course.categoryIds.some((categoryId) =>
-            selectedCategory.includes(categoryId)
-          )
-        )
+    selectedCategory && selectedCategory.length > 0
+      ? courses.filter((course) => {
+          return selectedCategory.some((categoryId) =>
+            course.categoryIds.includes(categoryId)
+          );
+        })
       : courses;
 
   React.useLayoutEffect(() => {
