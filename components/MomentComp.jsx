@@ -1,25 +1,40 @@
 import React from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { useState, useCallback } from "react";
-import YoutubePlayer from "react-native-youtube-iframe";
-import { WebView } from "react-native-webview";
+import { useState, useContext, useCallback } from "react";
+import YoutubeIframe from "react-native-youtube-iframe";
+
+// context:
+import { WatchedVideosContext } from "../context/WatchedVideosContext";
 
 const MomentDetail = ({ moment }) => {
   const [watched, setWatched] = useState(false);
+  const { addWatchedVideo } = useContext(WatchedVideosContext);
+
+  const handleStateChange = (event) => {
+    console.log("event:", event);
+    if (event === "ended") {
+      setWatched(true);
+      addWatchedVideo(moment.videoId);
+    }
+    console.log("watched:", watched);
+  };
 
   return (
     <ScrollView style={styles.momentContainer}>
-      <WebView
-        source={{ uri: `https://www.youtube.com/embed/${moment.videoId}` }}
-        style={styles.youtubePlayer}
+      <YoutubeIframe
+        height={219}
+        videoId={moment.videoId}
+        play={false}
+        onChangeState={handleStateChange}
       />
-      <Text style={styles.titleText}>{moment.videoDescriptions}</Text>
+      <Text style={styles.titleText} textAlign="left">
+        {moment.videoDescriptions}
+      </Text>
       <Text style={styles.momentText}>{moment.videoGoals.join(", ")}</Text>
     </ScrollView>
   );
 };
-//YoutubeIframe
+
 export default MomentDetail;
 
 const styles = StyleSheet.create({
@@ -38,7 +53,6 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 24,
     fontWeight: "bold",
-    textAlign: "flex-start",
     margin: 10,
   },
   youtubePlayer: {

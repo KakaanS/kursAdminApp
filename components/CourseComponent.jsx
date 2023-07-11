@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useCallback } from "react";
 import { View, Text, ScrollView, Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -7,21 +7,27 @@ import { WatchedVideosContext } from "../context/WatchedVideosContext";
 //Components
 import CourseFilter from "./CourseFilter";
 
-const CourseDetails = ({ route }) => {
+const CourseDetails = React.memo(({ route }) => {
   const { course } = route.params;
   const navigation = useNavigation();
   const { watchedVideos } = useContext(WatchedVideosContext);
 
-  const handleMomentPress = (moment) => {
-    const { videoOrder, videoId } = moment;
+  const handleMomentPress = useCallback(
+    (moment) => {
+      const { videoOrder, videoId } = moment;
+      const nextMoment = course.moments.find(
+        (m) => m.videoOrder === videoOrder + 1
+      );
 
-    if (videoOrder === 1 || watchedVideos.includes(moment.videoId)) {
-      navigation.navigate("MomentScreen", { moment });
-    } else {
-      console.log("Video not watched yet");
-      // create alert
-    }
-  };
+      if (videoOrder === 1 || watchedVideos.includes(moment.videoId)) {
+        navigation.navigate("MomentScreen", { moment: nextMoment });
+      } else {
+        console.log("Video not watched yet");
+        // create alert
+      }
+    },
+    [course.moments, watchedVideos]
+  );
 
   return (
     <ScrollView>
@@ -47,7 +53,7 @@ const CourseDetails = ({ route }) => {
       ))}
     </ScrollView>
   );
-};
+});
 
 export default CourseDetails;
 
