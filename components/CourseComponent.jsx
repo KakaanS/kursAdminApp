@@ -16,14 +16,13 @@ const CourseDetails = React.memo(({ route }) => {
     (moment) => {
       const { videoOrder, videoId } = moment;
       const nextMoment = course.moments.find(
-        (m) => m.videoOrder === videoOrder + 1
+        (m) => parseInt(m.videoOrder) === parseInt(videoOrder) + 1
       );
 
       if (videoOrder === 1 || watchedVideos.includes(moment.videoId)) {
         navigation.navigate("MomentScreen", { moment: nextMoment });
       } else {
         console.log("Video not watched yet");
-        // create alert
       }
     },
     [course.moments, watchedVideos]
